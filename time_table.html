@@ -4,7 +4,7 @@
 	<link type="text/css" href="global.css" rel="stylesheet" />
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 </head>
-<body onload="ptref_onLoad();">
+<body onload="traffic_reports_onLoad();">
 	<form name="form">
 		<div id="menu_div"></div>
 		<input type="hidden" id="uri" name="uri" value="">
@@ -13,14 +13,7 @@
 		<div id="params1" style="margin:0px;padding:0px;">
 		</div>
 
-		<h1 style="text-align:center;padding:0px;margin:0px">Exploration des données</h1>
-		<input type="button" value="Voir les réseaux" onclick="changeURI('/networks/','', '')">
-		<input type="button" value="Voir les modes commerciaux" onclick="changeURI('/commercial_modes/','', '')">
-		<input type="button" value="Voir les modes physiques" onclick="changeURI('/physical_modes/','', '')">
-		<input type="button" value="Voir les POI" onclick="changeURI('/poi_types/','', '')">
-		<input type="button" value="Voir les calendars" onclick="changeURI('/calendars/','', '')">
-		<input type="button" value="Voir l'état du trafic" onclick="changeURI('/traffic_reports/','', '')">
-		<div id="ariane_content">Ariane : <div id="ariane" style="display:inline;"></div></div>
+		<h1 style="text-align:center;padding:0px;margin:0px">Etat du traffic (traffic_reports)</h1>
 		<table width="100%" height="500px" border="1">
 			<tr>
 				<td width="50%" valign="top">
@@ -42,6 +35,6 @@
 	<script type="text/javascript" src="./assets/js/menu.js"></script>
 	<script type="text/javascript" src="./assets/js/lib.js"></script>
 	<script type="text/javascript" src="./assets/js/conversion.js"></script>
-	<script type="text/javascript" src="./assets/js/ptref.js"></script>
+	<script type="text/javascript" src="./assets/js/traffic_reports.js"></script>
 </body>
 </html>

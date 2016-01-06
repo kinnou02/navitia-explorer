@@ -3,7 +3,7 @@ ptref = function() {
     this.disruption_list=null,
     this.object_count=-1,
     this.object_type="",
-    this.object_type_list = ["stop_points", "stop_areas", "pois", "poi_types", "networks", "lines", "routes", "vehicle_journeys", "physical_modes", "commercial_modes", "connections", "traffic_reports" ],
+    this.object_type_list = ["stop_points", "stop_areas", "pois", "poi_types", "networks", "lines", "routes", "vehicle_journeys", "physical_modes", "commercial_modes", "connections", "traffic_reports", "calendars" ],
     this.response = null,
     this.load = function(ws_name, coverage, uri, call_back){
         if (endsWith(uri, "/departures/")) {
@@ -13,7 +13,7 @@ ptref = function() {
             navitia_call="coverage/"+coverage+uri+"?count=100";
             this.object_type = "places_nearby";
         } else {
-            navitia_call="coverage/"+coverage+uri+"?count=1000";
+            navitia_call="coverage/"+coverage+uri+"?count=10000";
             nav_params = uri.split("/");
             for (i = nav_params.length-1; i >=0; i--) {
                 nav_param = nav_params[i];
@@ -143,6 +143,39 @@ function showNetworksHtml(){
             }
         }
 		s_str+='<td>'+getSeverityIcon(worst_disruption)+'</td>';
+		s_str+="</tr>\n";
+		str+=s_str;
+	}
+	str+='</table>'
+	document.getElementById('ptref_content').innerHTML=str;
+}
+
+
+function showCalendarsHtml(){
+	str="";
+	str+='<table><tr>';
+	str+='<th>Id (Nb : ' + ptref.object_list.length + ' / ' + ptref.object_count + ')</th>';
+	str+='<th>Name</th>';
+	str+='<th>Explorer</th>';
+	str+='</tr>';
+	for (var i in ptref.object_list){
+		n=ptref.object_list[i];
+		s_str="<tr>";
+		s_str+='<td><a href="'+getNewURI('/calendars/'+n.id+'/', false, n.id)+'">'+n.id+'</a></td>';
+        title = "";
+        for (var j in n.active_periods){
+            p = n.active_periods[j];
+            title += "du "+ p.begin + " au " + p.end + "\n"; 
+        }
+        title += (n.week_pattern.monday) ? "L" : "-";
+        title += (n.week_pattern.tuesday) ? "Ma" : "-";
+        title += (n.week_pattern.wednesday) ? "Me" : "-";
+        title += (n.week_pattern.thursday) ? "J" : "-";
+        title += (n.week_pattern.friday) ? "V" : "-";
+        title += (n.week_pattern.saturday) ? "S" : "-";
+        title += (n.week_pattern.sunday) ? "D" : "-";
+		s_str+='<td><span title="'+title+'">'+n.name + "</span></td>";
+		s_str+='<td><a href="'+getNewURI('/lines/', true, n.id)+'">Lines</a></td>';
 		s_str+="</tr>\n";
 		str+=s_str;
 	}
@@ -698,6 +731,8 @@ function showObjectHtml(ptref){
 		showPlacesNearbyHtml();
 	} else if (ptref.object_type == "traffic_reports") {
 		showTrafficReportsHtml();
+	} else if (ptref.object_type == "calendars") {
+		showCalendarsHtml();
 	} else if (ptref.object_type == "networks") {
 		showNetworksHtml();
 	} else {
