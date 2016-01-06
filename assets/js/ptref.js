@@ -30,7 +30,7 @@ ptref = function() {
             var names = Object.keys( response );
             if (object.object_type == "") {object.object_type=names[2];}
             object.object_list=eval("response\."+object.object_type);
-            
+
             //traitement des disruptions
             var disruptions = [];
             for (var di in response.disruptions){
@@ -50,7 +50,7 @@ ptref = function() {
 
 function getSeverityIcon(disruption) {
     if (disruption != "") {
-        title = "Severity: "+disruption.severity.effect + "\n" + "Message: " + disruption.messages[0].text;
+        title = "Severity: "+disruption.severity.effect + "\n" + "Message: " + (disruption.messages ? disruption.messages[0].text : "") ;
         if (disruption.severity.effect == "NO_SERVICE"){
             return '<img src="./assets/img/notification_error.png" title="'+title+'" height="20" width="20">';
         } else {
